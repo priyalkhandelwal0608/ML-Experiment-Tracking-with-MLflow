@@ -1,15 +1,22 @@
-from fastapi import FastAPI, Request, Form
+from fastapi import FastAPI, Form
 from fastapi.responses import HTMLResponse
 import joblib
 import os
 
-# Absolute path to model.pkl
+# Resolve absolute path to model.pkl
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MODEL_PATH = os.path.join(BASE_DIR, "model", "model.pkl")
 
+# Load trained model
+if not os.path.exists(MODEL_PATH):
+    raise FileNotFoundError(
+        f"Model file not found at {MODEL_PATH}. "
+        f"Run 'python model/train_model.py' first."
+    )
+
 model = joblib.load(MODEL_PATH)
 
-app = FastAPI()
+app = FastAPI(title="Fraud Detection API")
 
 @app.get("/", response_class=HTMLResponse)
 def home():
@@ -37,12 +44,18 @@ def home():
     """
 
 @app.post("/predict", response_class=HTMLResponse)
-def predict(transaction_amount: float = Form(...),
-            account_age_days: int = Form(...),
-            num_transactions: int = Form(...)):
-    X = [[transaction_amount, account_age_days, num_transactions]]
-    prediction = model.predict(X)[0]
-    result = "Fraudulent Transaction" if prediction == 1 else "Legitimate Transaction"
+def predict(
+    transaction_amount: float = Form(...),
+    account_age_days: int = Form(...),
+    num_transactions: int = Form(...)
+):
+    try:
+        X = [[transaction_amount, account_age_days, num_transactions]]
+        prediction = model.predict(X)[0]
+        result = "Fraudulent Transaction" if prediction == 1 else "Legitimate Transaction"
+    except Exception as e:
+        result = f"Error: {str(e)}"
+
     return f"""
     <html>
         <head><title>Prediction Result</title></head>
@@ -53,3 +66,8 @@ def predict(transaction_amount: float = Form(...),
         </body>
     </html>
     """
+
+# Allow running directly with python api/app.py
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="127.0.0.1", port=8000, reload=True)
