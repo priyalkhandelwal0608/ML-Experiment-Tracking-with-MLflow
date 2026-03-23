@@ -14,13 +14,13 @@ An MLOps pipeline designed to monitor machine learning models in production, det
 | **retraining/** | Automated scripts to refresh the model when drift is detected. |
 
 ---
-##🛠️ Key Components
-Drift Detection
-The monitoring/drift_detection.py script identifies shifts between reference_data.csv and incoming production_data.csv. This ensures the model isn't making predictions on data it no longer understands.
+## 🛠️ Key Components
 
-Retraining Loop
-When the monitor flags significant drift, retraining/retrain.py can be triggered to update model.pkl using the most recent production data samples.
+### **Drift Detection**
+The `monitoring/drift_detection.py` script identifies shifts between `reference_data.csv` (the data the model was trained on) and incoming `production_data.csv`. This ensures the model isn't making "blind" predictions on data it no longer understands.
 
+### **Retraining Loop**
+When the monitor flags significant drift (e.g., using a Kolmogorov-Smirnov test), `retraining/retrain.py` is triggered to update `model.pkl` using the most recent production data samples.
 ## 🚀 Quick Start Guide
 
 ### 1. Environment Setup
