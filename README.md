@@ -1,4 +1,4 @@
-﻿# Drift-detection-system
+
 # Drift Detection System
 
 An MLOps pipeline designed to monitor machine learning models in production, detect data/concept drift, and trigger retraining to maintain model accuracy.
@@ -21,9 +21,3 @@ The `monitoring/drift_detection.py` script identifies shifts between `reference_
 
 ### **Retraining Loop**
 When the monitor flags significant drift (e.g., using a Kolmogorov-Smirnov test), `retraining/retrain.py` is triggered to update `model.pkl` using the most recent production data samples.
-## 🚀 Quick Start Guide
-
-### 1. Environment Setup
-Install the required dependencies:
-```bash
-pip install -r requirements.txt
