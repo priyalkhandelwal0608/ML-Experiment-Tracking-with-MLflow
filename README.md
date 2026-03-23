@@ -3,7 +3,7 @@
 
 An MLOps pipeline designed to monitor machine learning models in production, detect data/concept drift, and trigger retraining to maintain model accuracy.
 
-## 📂 Project Structure
+##  Project Structure
 
 | Directory | Description |
 | :--- | :--- |
@@ -14,7 +14,7 @@ An MLOps pipeline designed to monitor machine learning models in production, det
 | **retraining/** | Automated scripts to refresh the model when drift is detected. |
 
 ---
-## 🛠️ Key Components
+##  Key Components
 
 ### **Drift Detection**
 The `monitoring/drift_detection.py` script identifies shifts between `reference_data.csv` (the data the model was trained on) and incoming `production_data.csv`. This ensures the model isn't making "blind" predictions on data it no longer understands.
