@@ -26,7 +26,7 @@ When the monitor flags significant drift (e.g., using a Kolmogorov-Smirnov test)
 
 # Installation and run
 
--pip install -r requirements.txt
+- *pip install -r requirements.txt
 -python data/generate_data.py
 -python data/generate_production_data.py
 -python model/train_model.py
